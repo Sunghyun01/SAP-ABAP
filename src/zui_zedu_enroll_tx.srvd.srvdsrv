@@ -1,0 +1,4 @@
+@EndUserText.label: 'ZEDU 교육 신청 수정 서비스'
+define service ZUI_ZEDU_ENROLL_TX {
+  expose ZC_ZEDU_ENROLL as Enrollment;
+}

@@ -1,0 +1,33 @@
+managed implementation in class zbp_r_zedu_enroll unique;
+
+define behavior for ZR_ZEDU_ENROLL alias Enrollment
+persistent table zedu_enroll
+lock master
+{
+  update;
+
+  determination save_log on modify { update; }
+
+  field ( readonly ) EnrollId;
+  field ( readonly ) CourseId;
+  field ( readonly ) EmpId;
+  field ( readonly ) EmpName;
+  field ( readonly ) DeptName;
+  field ( readonly ) ReqDate;
+  field ( readonly ) CreatedBy;
+  field ( readonly ) CreatedDate;
+
+  mapping for zedu_enroll
+  {
+    EnrollId    = enroll_id;
+    CourseId    = course_id;
+    EmpId       = emp_id;
+    EmpName     = emp_name;
+    DeptName    = dept_name;
+    Status      = status;
+    ReqDate     = req_date;
+    CompDate    = comp_date;
+    CreatedBy   = created_by;
+    CreatedDate = created_date;
+  }
+}

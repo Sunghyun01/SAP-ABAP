@@ -1,0 +1,11 @@
+CLASS zbp_r_zedu_enroll DEFINITION
+  PUBLIC
+  ABSTRACT
+  FINAL
+  FOR BEHAVIOR OF zr_zedu_enroll.
+
+ENDCLASS.
+
+CLASS zbp_r_zedu_enroll IMPLEMENTATION.
+
+ENDCLASS.

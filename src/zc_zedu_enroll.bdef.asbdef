@@ -1,0 +1,6 @@
+projection;
+
+define behavior for ZC_ZEDU_ENROLL alias Enrollment
+{
+  use update;
+}
