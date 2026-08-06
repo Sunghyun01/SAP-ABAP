@@ -1,0 +1,10 @@
+projection;
+
+define behavior for ZC_ZEDU_ENROLL_EDIT alias Enrollment
+{
+  use update;
+
+  use action set_completed;
+  use action set_not_completed;
+  use action set_cancelled;
+}

@@ -6,6 +6,10 @@ lock master
 {
   update;
 
+  action set_completed result [1] $self;
+  action set_not_completed result [1] $self;
+  action set_cancelled result [1] $self;
+
   determination save_log on modify { update; }
 
   field ( readonly ) EnrollId;

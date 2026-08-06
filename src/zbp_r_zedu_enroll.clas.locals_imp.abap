@@ -2,6 +2,15 @@ CLASS lhc_enrollment DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
   PRIVATE SECTION.
 
+    METHODS set_completed FOR MODIFY
+      IMPORTING keys FOR ACTION Enrollment~set_completed RESULT result.
+
+    METHODS set_not_completed FOR MODIFY
+      IMPORTING keys FOR ACTION Enrollment~set_not_completed RESULT result.
+
+    METHODS set_cancelled FOR MODIFY
+      IMPORTING keys FOR ACTION Enrollment~set_cancelled RESULT result.
+
     METHODS save_log FOR DETERMINE ON MODIFY
       IMPORTING keys FOR Enrollment~save_log.
 
@@ -9,6 +18,105 @@ ENDCLASS.
 
 
 CLASS lhc_enrollment IMPLEMENTATION.
+
+  METHOD set_completed.
+
+    MODIFY ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        UPDATE FIELDS ( Status CompDate )
+        WITH VALUE #(
+          FOR key IN keys
+          (
+            %tky     = key-%tky
+            Status   = 'C'
+            CompDate = sy-datum
+          )
+        )
+      FAILED failed
+      REPORTED reported.
+
+    READ ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        FIELDS ( EnrollId CourseId EmpId EmpName DeptName Status ReqDate CompDate CreatedBy CreatedDate )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_result).
+
+    result = VALUE #(
+      FOR ls_result IN lt_result
+      (
+        %tky   = ls_result-%tky
+        %param = ls_result
+      )
+    ).
+
+  ENDMETHOD.
+
+
+  METHOD set_not_completed.
+
+    MODIFY ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        UPDATE FIELDS ( Status CompDate )
+        WITH VALUE #(
+          FOR key IN keys
+          (
+            %tky     = key-%tky
+            Status   = 'N'
+            CompDate = '00000000'
+          )
+        )
+      FAILED failed
+      REPORTED reported.
+
+    READ ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        FIELDS ( EnrollId CourseId EmpId EmpName DeptName Status ReqDate CompDate CreatedBy CreatedDate )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_result).
+
+    result = VALUE #(
+      FOR ls_result IN lt_result
+      (
+        %tky   = ls_result-%tky
+        %param = ls_result
+      )
+    ).
+
+  ENDMETHOD.
+
+
+  METHOD set_cancelled.
+
+    MODIFY ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        UPDATE FIELDS ( Status CompDate )
+        WITH VALUE #(
+          FOR key IN keys
+          (
+            %tky     = key-%tky
+            Status   = 'X'
+            CompDate = '00000000'
+          )
+        )
+      FAILED failed
+      REPORTED reported.
+
+    READ ENTITIES OF zr_zedu_enroll IN LOCAL MODE
+      ENTITY Enrollment
+        FIELDS ( EnrollId CourseId EmpId EmpName DeptName Status ReqDate CompDate CreatedBy CreatedDate )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_result).
+
+    result = VALUE #(
+      FOR ls_result IN lt_result
+      (
+        %tky   = ls_result-%tky
+        %param = ls_result
+      )
+    ).
+
+  ENDMETHOD.
+
 
   METHOD save_log.
 

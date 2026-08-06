@@ -1,0 +1,4 @@
+@EndUserText.label: 'ZEDU Enrollment Fiori Edit Service'
+define service ZUI_ZEDU_ENROLL_EDIT {
+  expose ZC_ZEDU_ENROLL_EDIT as Enrollment;
+}
