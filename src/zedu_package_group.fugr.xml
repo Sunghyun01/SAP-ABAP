@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>ZEDU_PACKAGE_GROUP</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZEDU_PACKAGE_GROUPTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZEDU_PACKAGE_GROUP</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZRFC_GET_EMP_ENROLLMENTS</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>Remote-Enabled Module</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IV_EMP_ID</PARAMETER>
+       <TYP>ZEDU_ENROLL-EMP_ID</TYP>
+      </RSIMP>
+     </IMPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>ET_RESULT</PARAMETER>
+       <TYP>ZEDU_EMP_ENROLL_TT</TYP>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IV_EMP_ID</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>사번</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_RESULT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ZEDU_EMP_ENROLL_TT</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
