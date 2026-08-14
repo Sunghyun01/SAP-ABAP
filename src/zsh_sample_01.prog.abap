@@ -1,9 +1,4 @@
-*&---------------------------------------------------------------------*
-*& Report ZSH_SAMPLE_01
-*&---------------------------------------------------------------------*
-*&
-*&---------------------------------------------------------------------*
-REPORT ZSH_SAMPLE_01.
+REPORT zsh_sample_01.
 
 TYPE-POOLS: slis.
 
@@ -15,8 +10,11 @@ TYPES: BEGIN OF ty_order,
        END OF ty_order.
 
 DATA: gt_order TYPE STANDARD TABLE OF ty_order,
+      gs_order TYPE ty_order,          " ← SELECT-OPTIONS 참조용 work area 추가
       gt_fcat  TYPE slis_t_fieldcat_alv,
       gs_fcat  TYPE slis_fieldcat_alv.
+
+SELECT-OPTIONS: s_ordid FOR gs_order-order_id.   " ← gt_order 대신 gs_order 사용
 
 START-OF-SELECTION.
 
@@ -26,7 +24,9 @@ START-OF-SELECTION.
     ( order_id = 10003 customer = 'Kakao'   amount =  45000 status = '대기' )
   ).
 
-  PERFORM build_fieldcat.
+  IF s_ordid[] IS NOT INITIAL.
+    DELETE gt_order WHERE order_id NOT IN s_ordid.
+  ENDIF.
 
   CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
     EXPORTING
@@ -41,28 +41,3 @@ START-OF-SELECTION.
   IF sy-subrc <> 0.
     WRITE: / 'ALV 출력 오류'.
   ENDIF.
-
-FORM build_fieldcat.
-
-  CLEAR gs_fcat.
-  gs_fcat-fieldname = 'ORDER_ID'.
-  gs_fcat-seltext_m = '주문번호'.
-  APPEND gs_fcat TO gt_fcat.
-
-  CLEAR gs_fcat.
-  gs_fcat-fieldname = 'CUSTOMER'.
-  gs_fcat-seltext_m = '고객'.
-  APPEND gs_fcat TO gt_fcat.
-
-  CLEAR gs_fcat.
-  gs_fcat-fieldname = 'AMOUNT'.
-  gs_fcat-seltext_m = '금액'.
-  gs_fcat-do_sum    = 'X'.
-  APPEND gs_fcat TO gt_fcat.
-
-  CLEAR gs_fcat.
-  gs_fcat-fieldname = 'STATUS'.
-  gs_fcat-seltext_m = '상태'.
-  APPEND gs_fcat TO gt_fcat.
-
-ENDFORM.
